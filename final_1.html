@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FINAL - Platform</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <!-- Fixed Top Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top shadow-lg">
+        <div class="container-fluid">
+            <!-- Logo with Graphics -->
+            <a class="navbar-brand fw-bold fs-3 text-white" href="#">
+                <i class="bi bi-gem text-warning me-2 fs-1"></i>
+                <span class="text-uppercase">FINAL</span>
+            </a>
+
+            <!-- Mobile Toggle Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Content -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- Main Menu -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white fw-semibold" href="#home">
+                            <i class="bi bi-house-fill me-1"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="#about">
+                            <i class="bi bi-info-circle-fill me-1"></i>About
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="#services">
+                            <i class="bi bi-gear-fill me-1"></i>Services
+                        </a>
+                    </li>
+                    
+                    <!-- Dropdown Menu -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-grid-fill me-1"></i>Products
+                        </a>
+                        <ul class="dropdown-menu shadow">
+                            <li>
+                                <a class="dropdown-item text-danger fw-semibold" href="#product1">
+                                    <i class="bi bi-code-slash me-2 text-danger"></i>Web Development
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-danger fw-semibold" href="#product2">
+                                    <i class="bi bi-phone-fill me-2 text-danger"></i>Mobile Apps
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item text-danger fw-semibold" href="#product3">
+                                    <i class="bi bi-cloud-fill me-2 text-danger"></i>Cloud Solutions
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-danger fw-semibold" href="#all-products">
+                                    <i class="bi bi-stars me-2 text-warning"></i>All Products
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="#contact">
+                            <i class="bi bi-envelope-fill me-1"></i>Contact
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Search Form -->
+                <form class="d-flex me-3" role="search">
+                    <div class="input-group">
+                        <input class="form-control border-warning" type="search" placeholder="Search FINAL..." aria-label="Search">
+                        <button class="btn btn-warning text-danger fw-bold" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Sign Up Buttons -->
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-light fw-semibold" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                    </button>
+                    <button class="btn btn-warning text-danger fw-bold" type="button" data-bs-toggle="modal" data-bs-target="#signupModal">
+                        <i class="bi bi-person-plus-fill me-1"></i>Sign Up
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main style="padding-top: 100px; padding-bottom: 100px;">
+        <!-- Hero Section -->
+        <section id="home" class="bg-white py-5">
+            <div class="container-fluid">
+                <div class="row justify-content-center text-center py-5">
+                    <div class="col-lg-8">
+                        <!-- Graphics in Content -->
+                        <div class="mb-4">
+                            <i class="bi bi-gem text-danger fs-1 me-3"></i>
+                            <i class="bi bi-stars text-warning fs-1 me-3"></i>
+                            <i class="bi bi-lightning-fill text-danger fs-1"></i>
+                        </div>
+                        
+                        <h1 class="display-2 text-danger fw-bold mb-4">
+                            Welcome to <span class="text-warning">FINAL</span>
+                        </h1>
+                        <p class="lead text-muted fs-4 mb-5">
+                            The ultimate Bootstrap v5 platform with responsive design, red & white theme, and premium graphics using only Bootstrap classes.
+                        </p>
+                        
+                        <!-- Action Buttons with Graphics -->
+                        <div class="d-flex justify-content-center gap-3 flex-wrap">
+                            <button class="btn btn-danger btn-lg shadow">
+                                <i class="bi bi-rocket-takeoff-fill me-2"></i>Get Started
+                            </button>
+                            <button class="btn btn-outline-danger btn-lg shadow">
+                                <i class="bi bi-play-circle-fill me-2"></i>Watch Demo
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="about" class="bg-danger-subtle py-5">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4">
+                        <div class="text-center text-lg-start">
+                            <i class="bi bi-gem text-danger fs-1 mb-3 d-block"></i>
+                            <h2 class="text-danger fw-bold fs-1 mb-4">About FINAL Platform</h2>
+                            <p class="lead text-muted fs-5 mb-4">
+                                Built with pure Bootstrap v5 classes - no custom CSS required! 
+                                Experience responsive design with red & white color scheme.
+                            </p>
+                            <ul class="list-unstyled fs-5">
+                                <li class="mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                    100% Bootstrap v5 Components
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                    Responsive Navigation
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                    Red & White Theme
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                    Rich Graphics with Icons
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Graphics Grid -->
+                    <div class="col-lg-6">
+                        <div class="row g-4 text-center">
+                            <div class="col-6">
+                                <div class="bg-white p-4 rounded shadow-sm">
+                                    <i class="bi bi-lightning-fill text-danger fs-1 mb-3 d-block"></i>
+                                    <h5 class="text-danger fw-bold">Lightning Fast</h5>
+                                    <p class="text-muted small">Optimized Performance</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="bg-white p-4 rounded shadow-sm">
+                                    <i class="bi bi-shield-fill-check text-success fs-1 mb-3 d-block"></i>
+                                    <h5 class="text-success fw-bold">Secure</h5>
+                                    <p class="text-muted small">Protected Platform</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="bg-white p-4 rounded shadow-sm">
+                                    <i class="bi bi-phone-fill text-primary fs-1 mb-3 d-block"></i>
+                                    <h5 class="text-primary fw-bold">Mobile First</h5>
+                                    <p class="text-muted small">Responsive Design</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="bg-white p-4 rounded shadow-sm">
+                                    <i class="bi bi-gem text-warning fs-1 mb-3 d-block"></i>
+                                    <h5 class="text-warning fw-bold">Premium</h5>
+                                    <p class="text-muted small">High Quality</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="bg-white py-5">
+            <div class="container-fluid">
+                <div class="text-center mb-5">
+                    <i class="bi bi-gear-fill text-danger fs-1 mb-3"></i>
+                    <h2 class="text-danger fw-bold fs-1">Our Services</h2>
+                    <p class="lead text-muted">Premium services with Bootstrap v5</p>
+                </div>
+                
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card border-danger h-100 shadow">
+                            <div class="card-body text-center">
+                                <i class="bi bi-code-slash text-danger fs-1 mb-3"></i>
+                                <h5 class="card-title text-danger fw-bold">Web Development</h5>
+                                <p class="card-text text-muted">Professional web solutions using modern technologies.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-warning h-100 shadow">
+                            <div class="card-body text-center">
+                                <i class="bi bi-phone-fill text-warning fs-1 mb-3"></i>
+                                <h5 class="card-title text-warning fw-bold">Mobile Apps</h5>
+                                <p class="card-text text-muted">Cross-platform mobile application development.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card border-success h-100 shadow">
+                            <div class="card-body text-center">
+                                <i class="bi bi-cloud-fill text-success fs-1 mb-3"></i>
+                                <h5 class="card-title text-success fw-bold">Cloud Solutions</h5>
+                                <p class="card-text text-muted">Scalable cloud infrastructure and services.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Fixed Bottom Footer -->
+    <footer class="bg-dark-subtle fixed-bottom shadow-lg">
+        <div class="container-fluid">
+            <div class="row py-3 align-items-center">
+                <div class="col-md-6">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-gem text-danger fs-4 me-2"></i>
+                        <span class="text-dark fw-bold">© 2025 FINAL Platform. All rights reserved.</span>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#privacy" class="text-decoration-none text-danger fw-semibold me-4">
+                        <i class="bi bi-shield-lock me-1"></i>Privacy Policy
+                    </a>
+                    <a href="#terms" class="text-decoration-none text-danger fw-semibold me-4">
+                        <i class="bi bi-file-text me-1"></i>Terms
+                    </a>
+                    <a href="#support" class="text-decoration-none text-danger fw-semibold">
+                        <i class="bi bi-headset me-1"></i>Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content border-danger">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title fw-bold">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Login to FINAL
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label fw-semibold">Email Address</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-danger-subtle">
+                                    <i class="bi bi-envelope text-danger"></i>
+                                </span>
+                                <input type="email" class="form-control border-danger" id="loginEmail" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label fw-semibold">Password</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-danger-subtle">
+                                    <i class="bi bi-lock text-danger"></i>
+                                </span>
+                                <input type="password" class="form-control border-danger" id="loginPassword" required>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content border-warning">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title fw-bold">
+                        <i class="bi bi-person-plus-fill me-2"></i>Join FINAL Platform
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="signupName" class="form-label fw-semibold">Full Name</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-warning-subtle">
+                                            <i class="bi bi-person text-warning"></i>
+                                        </span>
+                                        <input type="text" class="form-control border-warning" id="signupName" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="signupEmail" class="form-label fw-semibold">Email Address</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-warning-subtle">
+                                            <i class="bi bi-envelope text-warning"></i>
+                                        </span>
+                                        <input type="email" class="form-control border-warning" id="signupEmail" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="signupPassword" class="form-label fw-semibold">Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-warning-subtle">
+                                            <i class="bi bi-lock text-warning"></i>
+                                        </span>
+                                        <input type="password" class="form-control border-warning" id="signupPassword" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="confirmPassword" class="form-label fw-semibold">Confirm Password</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-warning-subtle">
+                                            <i class="bi bi-lock-fill text-warning"></i>
+                                        </span>
+                                        <input type="password" class="form-control border-warning" id="confirmPassword" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                            <label class="form-check-label" for="agreeTerms">
+                                I agree to the <a href="#" class="text-danger text-decoration-none fw-semibold">Terms and Conditions</a>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-warning text-dark fw-bold">
+                        <i class="bi bi-person-plus-fill me-1"></i>Create Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

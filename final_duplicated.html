@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FINAL Platform - Secure Web Application</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <!-- Cookie Consent Banner (Shows First) -->
+    <div id="cookieConsent" class="position-fixed bottom-0 start-0 end-0 bg-dark text-white p-4 shadow-lg" style="z-index: 9999;">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-shield-check-fill text-warning fs-3 me-3"></i>
+                        <div>
+                            <h6 class="fw-bold text-warning mb-1">🍪 Cookie & Privacy Notice</h6>
+                            <p class="mb-0 small">We use cookies to enhance your experience, provide security, and analyze usage. Required for login and core functionality.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+                    <button class="btn btn-outline-light btn-sm me-2" onclick="declineCookies()">
+                        <i class="bi bi-x-circle me-1"></i>Decline
+                    </button>
+                    <button class="btn btn-warning btn-sm" onclick="acceptCookies()">
+                        <i class="bi bi-check-circle me-1"></i>Accept All
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Warning Modal (Shows if cookies declined) -->
+    <div class="modal fade" id="securityWarningModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-warning">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>Limited Access Mode
+                    </h5>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="bi bi-clock-fill text-danger fs-1 mb-3"></i>
+                    <h5 class="text-danger fw-bold">10-Minute Demo Access</h5>
+                    <p class="text-muted">Without cookies, you have limited access for security reasons.</p>
+                    <div class="alert alert-info">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-info-circle-fill me-2"></i>
+                            <div>
+                                <strong>Time Remaining:</strong>
+                                <span id="demoTimer" class="fw-bold text-primary">10:00</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="small text-muted">After 10 minutes, you'll need to accept cookies or restart your session.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" onclick="startDemoMode()">
+                        <i class="bi bi-play-fill me-1"></i>Continue Demo
+                    </button>
+                    <button type="button" class="btn btn-success" onclick="acceptCookies()">
+                        <i class="bi bi-check-circle me-1"></i>Accept Cookies
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step-by-Step User Interface Guide -->
+    <div id="userGuide" class="d-none">
+        <div class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-75" style="z-index: 8888;">
+            <div class="container-fluid h-100 d-flex align-items-center justify-content-center">
+                <div class="bg-white rounded shadow-lg p-4" style="max-width: 600px; width: 90%;">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-lightbulb-fill text-warning fs-1 mb-3"></i>
+                        <h4 class="text-primary fw-bold">Welcome to FINAL Platform!</h4>
+                        <p class="text-muted">Let's walk you through 6 essential steps</p>
+                    </div>
+                    
+                    <!-- Step Content -->
+                    <div id="guideContent">
+                        <!-- Steps will be injected here -->
+                    </div>
+                    
+                    <div class="text-center">
+                        <button class="btn btn-outline-secondary me-2" id="prevStep" onclick="previousStep()">
+                            <i class="bi bi-arrow-left me-1"></i>Previous
+                        </button>
+                        <span class="mx-3">
+                            Step <span id="currentStep">1</span> of <span id="totalSteps">6</span>
+                        </span>
+                        <button class="btn btn-primary" id="nextStep" onclick="nextStep()">
+                            Next<i class="bi bi-arrow-right ms-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top shadow-lg">
+        <div class="container-fluid">
+            <!-- Logo -->
+            <a class="navbar-brand fw-bold fs-3 text-white" href="#dashboard">
+                <i class="bi bi-gem text-warning me-2 fs-1"></i>
+                <span class="text-uppercase">FINAL</span>
+            </a>
+
+            <!-- User Status -->
+            <div class="d-flex align-items-center text-white me-3">
+                <div id="securityStatus" class="me-3">
+                    <i class="bi bi-shield-exclamation text-warning"></i>
+                    <span class="small">Not Authenticated</span>
+                </div>
+                <div id="sessionTimer" class="small text-warning d-none">
+                    Time: <span id="remainingTime"></span>
+                </div>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Content -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="#dashboard" onclick="showSection('dashboard')">
+                            <i class="bi bi-speedometer2 me-1"></i>Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="#media" onclick="showSection('media')">
+                            <i class="bi bi-camera-video me-1"></i>Media Manager
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="#security" onclick="showSection('security')">
+                            <i class="bi bi-shield-check me-1"></i>Security Center
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white fw-semibold" href="#admin" onclick="showSection('admin')">
+                            <i class="bi bi-gear-fill me-1"></i>Admin Panel
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Authentication Buttons -->
+                <div class="d-flex gap-2" id="authButtons">
+                    <button class="btn btn-outline-light fw-semibold" onclick="showLoginModal()">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>Login
+                    </button>
+                    <button class="btn btn-warning text-danger fw-bold" onclick="showSignupModal()">
+                        <i class="bi bi-person-plus-fill me-1"></i>Sign Up
+                    </button>
+                </div>
+                
+                <!-- User Menu (Hidden by default) -->
+                <div class="dropdown d-none" id="userMenu">
+                    <button class="btn btn-outline-light dropdown-toggle" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle me-1"></i>
+                        <span id="userName">User</span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#profile"><i class="bi bi-person me-2"></i>Profile</a></li>
+                        <li><a class="dropdown-item" href="#settings"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="logout()"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main style="padding-top: 100px; padding-bottom: 50px;">
+
+        <!-- DASHBOARD SECTION -->
+        <section id="dashboard" class="content-section">
+            <div class="container-fluid py-4">
+                <div class="row g-4">
+                    <!-- Welcome Card -->
+                    <div class="col-12">
+                        <div class="card bg-gradient bg-primary text-white">
+                            <div class="card-body text-center py-5">
+                                <i class="bi bi-gem fs-1 mb-3"></i>
+                                <h2 class="fw-bold mb-3">Welcome to FINAL Platform</h2>
+                                <p class="lead mb-4">Secure, Feature-Rich Web Application with Advanced Security</p>
+                                <button class="btn btn-warning btn-lg me-3" onclick="startUserGuide()">
+                                    <i class="bi bi-lightbulb-fill me-2"></i>Take Tour (6 Steps)
+                                </button>
+                                <button class="btn btn-outline-light btn-lg" onclick="showSection('security')">
+                                    <i class="bi bi-shield-check me-2"></i>Security Center
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Status -->
+                    <div class="col-lg-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-danger text-white">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-shield-fill-check me-2"></i>Security Status
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="securityInfo">
+                                    <div class="text-center mb-3">
+                                        <i class="bi bi-shield-exclamation text-warning fs-1"></i>
+                                        <h6 class="text-warning mt-2">Authentication Required</h6>
+                                    </div>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2">
+                                            <i class="bi bi-x-circle text-danger me-2"></i>
+                                            <span class="text-muted">Not Logged In</span>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-x-circle text-danger me-2"></i>
+                                            <span class="text-muted">Limited Access</span>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-clock text-warning me-2"></i>
+                                            <span class="text-muted">Session Timer Active</span>
+                                        </li>
+                                    </ul>
+                                    <div class="d-grid">
+                                        <button class="btn btn-success" onclick="showLoginModal()">
+                                            <i class="bi bi-shield-check me-2"></i>Secure Login
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Monitor -->
+                    <div class="col-lg-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-activity me-2"></i>Activity Monitor
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="activityLog">
+                                    <div class="small text-muted mb-2">
+                                        <i class="bi bi-clock me-1"></i>Recent Activities:
+                                    </div>
+                                    <ul class="list-unstyled small" id="activityList">
+                                        <li class="mb-2">
+                                            <i class="bi bi-globe text-primary me-2"></i>
+                                            Page loaded - <span class="text-muted" id="loadTime"></span>
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-shield text-warning me-2"></i>
+                                            Security check - Pending
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="bi bi-cookie text-info me-2"></i>
+                                            Cookie status - <span id="cookieStatus">Pending</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="col-lg-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-graph-up me-2"></i>Platform Stats
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3 text-center">
+                                    <div class="col-6">
+                                        <div class="bg-primary-subtle p-3 rounded">
+                                            <i class="bi bi-people-fill text-primary fs-4"></i>
+                                            <div class="fw-bold text-primary mt-1">1,247</div>
+                                            <div class="small text-muted">Users</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="bg-success-subtle p-3 rounded">
+                                            <i class="bi bi-shield-check text-success fs-4"></i>
+                                            <div class="fw-bold text-success mt-1">99.9%</div>
+                                            <div class="small text-muted">Uptime</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="bg-warning-subtle p-3 rounded">
+                                            <i class="bi bi-camera-video text-warning fs-4"></i>
+                                            <div class="fw-bold text-warning mt-1">156</div>
+                                            <div class="small text-muted">Media Files</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="bg-danger-subtle p-3 rounded">
+                                            <i class="bi bi-database text-danger fs-4"></i>
+                                            <div class="fw-bold text-danger mt-1">2.4GB</div>
+                                            <div class="small text-muted">Database</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MEDIA MANAGER SECTION -->
+        <section id="media" class="content-section d-none">
+            <div class="container-fluid py-4">
+                <div class="row g-4">
+                    <!-- Media Upload Area -->
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-warning text-dark">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-cloud-upload-fill me-2"></i>Media Manager - Upload Center
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-4">
+                                    <!-- Quick Upload -->
+                                    <div class="col-lg-6">
+                                        <div class="border-2 border-dashed border-primary rounded p-4 text-center">
+                                            <i class="bi bi-cloud-upload text-primary fs-1 mb-3"></i>
+                                            <h5 class="text-primary">Quick Upload</h5>
+                                            <p class="text-muted mb-3">Drag & drop or click to upload</p>
+                                            <input type="file" class="form-control mb-3" multiple accept="image/*,video/*,.gif">
+                                            <div class="d-flex gap-2 justify-content-center flex-wrap">
+                                                <button class="btn btn-primary btn-sm" onclick="uploadImages()">
+                                                    <i class="bi bi-image me-1"></i>Photos
+                                                </button>
+                                                <button class="btn btn-success btn-sm" onclick="uploadVideos()">
+                                                    <i class="bi bi-camera-video me-1"></i>Videos
+                                                </button>
+                                                <button class="btn btn-warning btn-sm" onclick="uploadAnimations()">
+                                                    <i class="bi bi-play-circle me-1"></i>Animations
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Media Library -->
+                                    <div class="col-lg-6">
+                                        <h6 class="fw-bold mb-3">
+                                            <i class="bi bi-folder-fill me-2"></i>Media Library
+                                        </h6>
+                                        <div class="row g-2 mb-3">
+                                            <div class="col-4">
+                                                <div class="bg-primary-subtle p-3 rounded text-center">
+                                                    <i class="bi bi-image text-primary fs-4"></i>
+                                                    <div class="fw-bold">89</div>
+                                                    <div class="small">Photos</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="bg-success-subtle p-3 rounded text-center">
+                                                    <i class="bi bi-camera-video text-success fs-4"></i>
+                                                    <div class="fw-bold">23</div>
+                                                    <div class="small">Videos</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="bg-warning-subtle p-3 rounded text-center">
+                                                    <i class="bi bi-play-circle text-warning fs-4"></i>
+                                                    <div class="fw-bold">15</div>
+                                                    <div class="small">GIFs</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-grid gap-2">
+                                            <button class="btn btn-outline-primary" onclick="browseMedia()">
+                                                <i class="bi bi-folder2-open me-2"></i>Browse All Media
+                                            </button>
+                                            <button class="btn btn-outline-success" onclick="organizeMedia()">
+                                                <i class="bi bi-grid-3x3 me-2"></i>Organize Library
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Quick Actions -->
+                                <hr class="my-4">
+                                <div class="row g-3">
+                                    <div class="col-md-3">
+                                        <div class="d-grid">
+                                            <button class="btn btn-info" onclick="optimizeMedia()">
+                                                <i class="bi bi-speedometer2 me-2"></i>Optimize All
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="d-grid">
+                                            <button class="btn btn-secondary" onclick="backupMedia()">
+                                                <i class="bi bi-cloud-download me-2"></i>Backup Media
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="d-grid">
+                                            <button class="btn btn-warning" onclick="compressMedia()">
+                                                <i class="bi bi-archive me-2"></i>Compress Files
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="d-grid">
+                                            <button class="btn btn-danger" onclick="cleanupMedia()">
+                                                <i class="bi bi-trash3 me-2"></i>Cleanup Unused
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Uploads -->
+                    <div class="col-lg-8">
+                        <div class="card h-100">
+                            <div class="card-header bg-info text-white">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-clock-history me-2"></i>Recent Uploads
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>File</th>
+                                                <th>Type</th>
+                                                <th>Size</th>
+                                                <th>Date</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <i class="bi bi-image text-primary me-2"></i>
+                                                    hero-banner.jpg
+                                                </td>
+                                                <td><span class="badge bg-primary">Image</span></td>
+                                                <td>2.4 MB</td>
+                                                <td>2025-08-31</td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm">
+                                                        <button class="btn btn-outline-primary" title="View">
+                                                            <i class="bi bi-eye"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-warning" title="Edit">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-danger" title="Delete">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <i class="bi bi-camera-video text-success me-2"></i>
+                                                    intro-video.mp4
+                                                </td>
+                                                <td><span class="badge bg-success">Video</span></td>
+                                                <td>15.7 MB</td>
+                                                <td>2025-08-31</td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm">
+                                                        <button class="btn btn-outline-primary" title="View">
+                                                            <i class="bi bi-play"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-warning" title="Edit">
+                                                            <i class="bi bi-scissors"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-danger" title="Delete">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <i class="bi bi-play-circle text-warning me-2"></i>
+                                                    loading-spinner.gif
+                                                </td>
+                                                <td><span class="badge bg-warning">Animation</span></td>
+                                                <td>854 KB</td>
+                                                <td>2025-08-30</td>
+                                                <td>
+                                                    <div class="btn-group btn-group-sm">
+                                                        <button class="btn btn-outline-primary" title="View">
+                                                            <i class="bi bi-eye"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-warning" title="Edit">
+                                                            <i class="bi bi-gear"></i>
+                                                        </button>
+                                                        <button class="btn btn-outline-danger" title="Delete">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Media Statistics -->
+                    <div class="col-lg-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-success text-white">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-bar-chart me-2"></i>Storage Statistics
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-4">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span class="text-muted">Storage Used</span>
+                                        <span class="fw-bold">2.4 GB / 10 GB</span>
+                                    </div>
+                                    <div class="progress" style="height: 8px;">
+                                        <div class="progress-bar bg-primary" style="width: 24%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row g-3 text-center">
+                                    <div class="col-12">
+                                        <div class="bg-light p-3 rounded">
+                                            <i class="bi bi-hdd text-primary fs-4"></i>
+                                            <div class="fw-bold text-primary mt-1">7.6 GB</div>
+                                            <div class="small text-muted">Available Space</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-outline-primary" onclick="upgradeStorage()">
+                                        <i class="bi bi-arrow-up-circle me-2"></i>Upgrade Storage
+                                    </button>
+                                    <button class="btn btn-outline-warning" onclick="cleanStorage()">
+                                        <i class="bi bi-broom me-2"></i>Clean Storage
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECURITY CENTER SECTION -->
+        <section id="security" class="content-section d-none">
+            <div class="container-fluid py-4">
+                <div class="row g-4">
+                    <!-- Security Dashboard -->
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-danger text-white">
+                                <h5 class="mb-0">
+                                    <i class="bi bi-shield-fill-check me-2"></i>Security Center - Advanced Protection
+                                </h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-4">
+                                    <!-- User Activity Monitoring -->
+                                    <div class="col-lg-6">
+                                        <h6 class="fw-bold text-danger mb-3">
+                                            <i class="bi bi-activity me-2"></i>User Activity Monitoring
+                                        </h6>
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>User</th>
+                                                        <th>Action</th>
+                                                        <th>Time</th>
+                                                        <th>IP</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="activityTable">
+                                                    <tr>
+                                                        <td>john@example.com</td>
+                                                        <td>Login</td>
+                                                        <td>10:30 AM</td>
+                                                        <td>192.168.1.100</td>
+                                                        <td><span class="badge bg-success">Safe</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>sarah@company.com</td>
+                                                        <td>File Upload</td>
+                                                        <td>10:25 AM</td>
+                                                        <td>203.123.45.67</td>
+                                                        <td><span class="badge bg-
